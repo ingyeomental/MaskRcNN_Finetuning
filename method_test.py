@@ -12,3 +12,14 @@ data_loader = torch.utils.data.DataLoader(
     dataset, batch_size=2, shuffle=True, num_workers=4,
     collate_fn=utils.collate_fn
 )
+
+# train
+images, targets = next(iter(data_loader))
+images = list(image for image in images)
+targets = [{k: v for k, v in t.items()} for t in targets]
+output = model(images, targets)
+
+# inference
+model.eval()
+inference_input = [torch.rand(3, 300, 400), torch.rand(3, 500, 400)]
+predictions = model(inference_input)
